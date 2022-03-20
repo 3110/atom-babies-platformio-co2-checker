@@ -1,0 +1,3 @@
+[submodule "lib/AtomBabies"]
+	path = lib/AtomBabies
+	url = https://github.com/3110/atom-babies-arduino/
