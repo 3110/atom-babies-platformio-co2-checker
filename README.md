@@ -1,5 +1,7 @@
 # ATOM Babies: 二酸化炭素濃度チェック
 
+<a href="https://gyazo.com/78703d4c5b78e80e5e16b9ceb2aba170"><img src="https://i.gyazo.com/78703d4c5b78e80e5e16b9ceb2aba170.jpg" alt="Image from Gyazo" width="640"/></a>
+
 [M5StickC Proto Hat](https://shop.m5stack.com/products/m5stickc-proto-hat) に入る [M5StickC Proto Hat 向け CO<sub>2</sub> センサボード](https://mktechlab.net/co2-sensor-board-scd4x/)を[ATOM Babies](https://github.com/3110/atom-babies-arduino) に接続して，二酸化炭素濃度をチェックしてもらいます。
 
 ## 使用方法
