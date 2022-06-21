@@ -4,6 +4,21 @@
 
 [M5StickC Proto Hat](https://shop.m5stack.com/products/m5stickc-proto-hat) に入る [M5StickC Proto Hat 向け CO<sub>2</sub> センサボード](https://mktechlab.net/co2-sensor-board-scd4x/)を[ATOM Babies](https://github.com/3110/atom-babies-arduino) に接続して，二酸化炭素濃度をチェックしてもらいます。
 
+## 入手方法
+
+submodule があるので，クローンする際に`--recursive`を付けるのを忘れないようにしてください。
+
+```bash
+git clone --recursive https://github.com/3110/atom-babies-platformio-co2-checker
+```
+
+`--recursive`を付け忘れたときは，クローンしたフォルダで以下を実行してください。
+
+```bash
+cd atom-babies-platformio-co2-checker
+git submodule update --init --recursive
+```
+
 ## 使用方法
 
 ### 二酸化炭素濃度の測定
