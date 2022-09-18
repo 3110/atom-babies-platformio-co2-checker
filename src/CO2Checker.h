@@ -27,7 +27,7 @@ public:
     CO2Checker(void);
     virtual ~CO2Checker(void);
 
-    virtual bool begin(TwoWire& wire = Wire1);
+    virtual bool begin(TwoWire& wire = Wire);
     virtual bool update(AtomBabies& babies);
 
     virtual bool startPeriodicMeasurement(bool isLowPower = true);
