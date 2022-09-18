@@ -1,5 +1,3 @@
-#include <Wire.h>
-
 #include "AtomBabies.h"
 #include "CO2Checker.h"
 
@@ -10,8 +8,7 @@ CO2Checker checker;
 
 void setup(void) {
     babies.begin();
-
-    checker.begin(Wire);
+    checker.begin();
     M5.update();
     if (M5.Btn.isPressed()) {
         babies.fill(CRGB::Green);
