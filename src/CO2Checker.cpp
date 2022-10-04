@@ -2,6 +2,8 @@
 
 namespace M5Stack_AtomBabies {
 
+const char* CO2Checker::JSON_KEY_CO2 = "co2";
+
 CO2Checker::CO2Checker(void) : _scd4x(), _data{false, 0, 0.0f, 0.0f} {
 }
 
@@ -14,11 +16,22 @@ bool CO2Checker::begin(TwoWire& wire) {
     delay(1000);
     bool result = stopPeriodicMeasurement();
     result |= showSerialNumber();
+    result |= startPeriodicMeasurement();
+#ifdef ENABLE_ESPNOW
+    if (this->_espnow.begin()) {
+        result |= this->_espnow.registerPeer(EspNowManager::BROADCAST_ADDRESS);
+    } else {
+        result = false;
+    }
+#endif
     return result;
 }
 
 bool CO2Checker::update(AtomBabies& babies) {
     if (babies.wasPressed()) {
+#ifdef ENABLE_ESPNOW
+        send();
+#endif
         bool blinking = babies.isBlinking();
         if (blinking) {
             babies.stopBlink();
@@ -35,6 +48,9 @@ bool CO2Checker::update(AtomBabies& babies) {
     }
     if (readMeasurement(this->_data)) {
         showSensorData(this->_data);
+#ifdef ENABLE_ESPNOW
+        send();
+#endif
         babies.clear(true);
         if (this->_data.co2 >= DEFAULT_CAUTION_CO2_CONCENTRATION) {
             displayCautionFace(babies);
@@ -153,6 +169,17 @@ bool CO2Checker::doForcedRecalibration(uint16_t target) {
                      frcCorrection);
     return error == NoError;
 }
+
+#ifdef ENABLE_ESPNOW
+bool CO2Checker::send(void) {
+    JSONVar o;
+    o[JSON_KEY_CO2] = this->_data.co2;
+    String s = JSON.stringify(o);
+    return this->_espnow.send(EspNowManager::BROADCAST_ADDRESS,
+                              reinterpret_cast<const uint8_t*>(s.c_str()),
+                              s.length());
+}
+#endif
 
 bool CO2Checker::showSerialNumber(void) {
     uint16_t s[3] = {0};

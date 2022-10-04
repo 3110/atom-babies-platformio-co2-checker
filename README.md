@@ -19,6 +19,26 @@ cd atom-babies-platformio-co2-checker
 git submodule update --init --recursive
 ```
 
+## コンパイル
+
+デフォルトの環境`env:atom-babies-co2-checker`でコンパイルします。
+
+```
+pio run
+```
+
+二酸化炭素濃度を ESP-NOW のブロードキャストを利用して送信する場合は，環境`env:atom-babies-co2-checker-espnow`でコンパイルします。
+
+```
+pio run -e atom-babies-co2-checker-espnow
+```
+
+二酸化炭素濃度は以下の JSON で 30 秒ごとに送信されます。
+
+```json
+{ "co2": 985 }
+```
+
 ## 使用方法
 
 ### 二酸化炭素濃度の測定
