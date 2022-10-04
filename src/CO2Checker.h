@@ -5,6 +5,12 @@
 #include "AtomBabies.h"
 #include "Debug.h"
 
+#ifdef ENABLE_ESPNOW
+#include <Arduino_JSON.h>
+
+#include "EspNowManager.h"
+#endif
+
 namespace M5Stack_AtomBabies {
 
 typedef struct {
@@ -23,6 +29,8 @@ public:
     static const uint16_t DEFAULT_CAUTION_CO2_CONCENTRATION = 1000;
     static const uint16_t FORCED_RECALIBRATION_INTERVAL_SEC = 180;  // 3min
     static const uint16_t SCROLL_INTERVAL_MS = 300;
+
+    static const char* JSON_KEY_CO2;
 
     CO2Checker(void);
     virtual ~CO2Checker(void);
@@ -45,6 +53,9 @@ public:
         uint16_t target = DEFAULT_FORCED_TARGET_CO2_CONCENTRATION);
 
 protected:
+#ifdef ENABLE_ESPNOW
+    virtual bool send(void);
+#endif
     virtual bool showSerialNumber(void);
     virtual void showSensorData(const SensorData& data) const;
     virtual void showErrorMessage(const char* msg, uint16_t error);
@@ -54,6 +65,9 @@ private:
 
     SensirionI2CScd4x _scd4x;
     SensorData _data;
+#ifdef ENABLE_ESPNOW
+    EspNowManager _espnow;
+#endif
 };
 
 }  // namespace M5Stack_AtomBabies
